@@ -14,4 +14,4 @@ if ! [ -e "$PWD/bullet-sabot.aci" ]; then
   ./build.sh
 fi
 
-./rkt/rkt --insecure-options=image run ./bullet-sabot.aci --volume static,kind=host,source=/home/kevin/projects/webdev/bullet-tracer/dist,readOnly=true --net=host
+./rkt/rkt --insecure-options=image run --hostname="bullet-sabot" --port=http:80 --volume static,kind=host,source=/home/kevin/projects/webdev/bullet-tracer/dist,readOnly=true ./bullet-sabot.aci
