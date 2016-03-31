@@ -1,5 +1,13 @@
 FROM alpine:latest
-EXPOSE 8080
-COPY venv/ /venv/
-COPY src/ /src/
-ENTRYPOINT ["/venv/bin/python", "/src/app.py"]
+MAINTAINER Kevin Wang <wangkevin448@gmail.com>
+
+RUN apk add --update python py-pip && pip install virtualenv && rm -rf /var/cache/apk/*
+
+WORKDIR /app
+
+COPY src/ /app/
+RUN pip install -r /app/requirements.txt
+
+EXPOSE 5000
+
+CMD ["python", "app.py"]
