@@ -1,6 +1,9 @@
 from flask import Flask
+from bulletapi import bulletapi
 
 app = Flask(__name__, static_folder='static', static_url_path='')
+
+app.register_blueprint(bulletapi, url_prefix='/api')
 
 @app.route('/')
 def index():
