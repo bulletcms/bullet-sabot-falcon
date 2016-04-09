@@ -22,5 +22,5 @@ mockpages = {
 }
 
 @bulletapi.route('/pages/<pagename>', methods=['GET'])
-def get_pages(pagename):
-    return jsonify(mockpages[pagename])
+def get_page(pagename):
+    return jsonify({'page': mockpages[pagename]})
