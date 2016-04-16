@@ -1,6 +1,11 @@
 from flask import jsonify
 from base import bulletapi
 
+mockpageslist = [
+    'indexroute',
+    'kevin'
+]
+
 mockpages = {
     'kevin': [
         {
@@ -21,6 +26,10 @@ mockpages = {
     ]
 }
 
+@bulletapi.route('/pages', methods=['GET'])
+def get_pages():
+    return jsonify({'data': mockpageslist})
+
 @bulletapi.route('/pages/<pagename>', methods=['GET'])
 def get_page(pagename):
-    return jsonify({'page': mockpages[pagename]})
+    return jsonify({'data': mockpages[pagename]})
