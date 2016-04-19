@@ -14,12 +14,29 @@ mockpages = {
         },
         {
             'component': 'p',
-            'children': 'this is just a test page'
+            'children': 'hi, i am kevin'
         },
         {
             'component': 'DateView',
             'config': {
                 'date': 1460146245,
+                'author': 'xorkevin'
+            }
+        }
+    ],
+    'indexroute': [
+        {
+            'component': 'h1',
+            'children': 'indexroute'
+        },
+        {
+            'component': 'p',
+            'children': 'this is just a test home page for the index route'
+        },
+        {
+            'component': 'DateView',
+            'config': {
+                'date': 1461052472,
                 'author': 'xorkevin'
             }
         }
