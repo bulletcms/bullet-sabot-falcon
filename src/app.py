@@ -1,7 +1,9 @@
 from flask import Flask
+from flask.ext.cors import CORS
 from bulletapi import bulletapi
 
 app = Flask(__name__, static_folder='static', static_url_path='')
+CORS(app)
 
 app.register_blueprint(bulletapi, url_prefix='/api')
 
