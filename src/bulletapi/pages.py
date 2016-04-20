@@ -3,7 +3,8 @@ from base import bulletapi
 
 mockpageslist = [
     'indexroute',
-    'kevin'
+    'kevin',
+    'about'
 ]
 
 mockpages = {
@@ -18,8 +19,25 @@ mockpages = {
         },
         {
             'component': 'DateView',
-            'config': {
+            'props': {
                 'date': 1460146245,
+                'author': 'xorkevin'
+            }
+        }
+    ],
+    'about': [
+        {
+            'component': 'h1',
+            'children': 'About'
+        },
+        {
+            'component': 'p',
+            'children': 'this is the about page'
+        },
+        {
+            'component': 'DateView',
+            'props': {
+                'date': 1461113451,
                 'author': 'xorkevin'
             }
         }
@@ -35,7 +53,7 @@ mockpages = {
         },
         {
             'component': 'DateView',
-            'config': {
+            'props': {
                 'date': 1461052472,
                 'author': 'xorkevin'
             }
