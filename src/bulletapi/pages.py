@@ -1,5 +1,6 @@
 from flask import jsonify
-from base import bulletapi
+from flask.ext.restful import Resource, url_for
+from base import bulletapi, bulletrestapi
 
 mockpageslist = [
     'indexroute',
