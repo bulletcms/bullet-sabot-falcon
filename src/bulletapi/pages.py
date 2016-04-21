@@ -1,6 +1,6 @@
 from flask import jsonify
 from flask.ext.restful import Resource, url_for
-from base import bulletapi, bulletrestapi
+from bulletapi.base import bullet_api, bullet_rest_api
 
 mockpageslist = [
     'indexroute',
@@ -62,10 +62,10 @@ mockpages = {
     ]
 }
 
-@bulletapi.route('/pages', methods=['GET'])
+@bullet_api.route('/pages', methods=['GET'])
 def get_pages():
     return jsonify({'data': mockpageslist})
 
-@bulletapi.route('/pages/<pagename>', methods=['GET'])
+@bullet_api.route('/pages/<pagename>', methods=['GET'])
 def get_page(pagename):
     return jsonify({'data': mockpages[pagename]})

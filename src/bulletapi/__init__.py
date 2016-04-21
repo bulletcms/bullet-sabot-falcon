@@ -1,2 +1,2 @@
-from base import bulletapi
-import pages
+from bulletapi.base import bullet_api
+import bulletapi.pages

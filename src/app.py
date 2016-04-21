@@ -1,11 +1,11 @@
 from flask import Flask
 from flask.ext.cors import CORS
-from bulletapi import bulletapi
+from bulletapi import bullet_api
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 CORS(app)
 
-app.register_blueprint(bulletapi, url_prefix='/api')
+app.register_blueprint(bullet_api, url_prefix='/api')
 
 @app.route('/')
 def index():

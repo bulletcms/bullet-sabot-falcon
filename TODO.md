@@ -12,4 +12,4 @@
   - [ ] blog
 - [ ] create configuration via config.py
   - [ ] should read from cassandra database
-- [ ] create test script
+- [x] create test script
