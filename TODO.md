@@ -2,9 +2,9 @@
 
 ## flask app
 
-- [ ] routing for static assets
+- [x] routing for static assets
 - [ ] routing for api calls
-  - [ ] use blueprints to register api
+  - [x] use blueprints to register api
   - [ ] forum
   - [ ] pages
   - [ ] dashboard
