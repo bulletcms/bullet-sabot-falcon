@@ -82,6 +82,8 @@ class Pages(Resource):
         mockpages[req.path] = req.content
         return '', 201
 
+bullet_rest_api.add_resource(Pages, '/pages')
+
 
 # PAGES
 def abort_if_page_dne(page_id):
@@ -104,7 +106,4 @@ class Page(Resource):
         mockpages[page_id] = reqparser.parse_args().data.content
         return ('', 201)
 
-
-# ROUTING
-bullet_rest_api.add_resource(Pages, '/pages')
 bullet_rest_api.add_resource(Page, '/pages/<page_id>')
