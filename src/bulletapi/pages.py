@@ -1,12 +1,12 @@
 from flask import jsonify
-from flask.ext.restful import Resource, url_for
+from flask.ext.restful import Resource, reqparse, abort, url_for
 from bulletapi.base import bullet_api, bullet_rest_api
 
-mockpageslist = [
+mockpageslist = {
     'indexroute',
     'kevin',
     'about'
-]
+}
 
 mockpages = {
     'kevin': [
@@ -62,10 +62,49 @@ mockpages = {
     ]
 }
 
-@bullet_api.route('/pages', methods=['GET'])
-def get_pages():
-    return jsonify({'data': mockpageslist})
 
-@bullet_api.route('/pages/<pagename>', methods=['GET'])
-def get_page(pagename):
-    return jsonify({'data': mockpages[pagename]})
+reqparser = reqparse.RequestParser()
+reqparser.add_argument('data')
+
+
+# PAGE LIST
+def abort_if_page_exists(page_id):
+    if page_id in mockpageslist:
+        abort(409, message='Page {} already exists'.format(page_id))
+
+class Pages(Resource):
+    def get(self):
+        return {'data': list(mockpageslist)}
+
+    def post(self):
+        req = reqparser.parse_args().data
+        abort_if_page_exists(req.path)
+        mockpages[req.path] = req.content
+        return '', 201
+
+
+# PAGES
+def abort_if_page_dne(page_id):
+    if page_id not in mockpageslist:
+        abort(404, message='Page {} does not exist'.format(page_id))
+
+class Page(Resource):
+    def get(self, page_id):
+        abort_if_page_dne(page_id)
+        return {'data': mockpages[page_id]}
+
+    def delete(self, page_id):
+        abort_if_page_dne(page_id)
+        mockpageslist.remove(page_id)
+        del mockpages[page_id]
+        return ('', 204)
+
+    def put(self, page_id):
+        abort_if_page_dne(page_id)
+        mockpages[page_id] = reqparser.parse_args().data.content
+        return ('', 201)
+
+
+# ROUTING
+bullet_rest_api.add_resource(Pages, '/pages')
+bullet_rest_api.add_resource(Page, '/pages/<page_id>')
