@@ -1,4 +1,5 @@
 from gcloud import datastore
+from .dataservice import DataService
 
 ##########################################
 ##    Google Datastore Configuration    ##
@@ -9,7 +10,7 @@ from gcloud import datastore
 ##    Google Datastore Service          ##
 ##########################################
 
-class GCDService:
+class GCDService(DataService):
 
     def __init__(self, project_id):
         self._project_id = project_id

@@ -1,10 +1,10 @@
-from flask import jsonify
 from flask.ext.restful import Resource, reqparse, abort
-from bulletapi.base import bullet_api, bullet_rest_api
+from .base import bullet_rest_api
+from .storage import GCDService
 
 
 ##########################################
-##    Temp Mock Data                    ##
+##    Data                              ##
 ##########################################
 mockpageslist = {
     'indexroute',
@@ -65,6 +65,10 @@ mockpages = {
         }
     ]
 }
+
+
+# Google Cloud Datastore Service
+# googlecloud = GCDService('bullet-sabot-test')
 
 
 ##########################################
