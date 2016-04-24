@@ -1,7 +1,11 @@
 from flask import jsonify
-from flask.ext.restful import Resource, reqparse, abort, url_for
+from flask.ext.restful import Resource, reqparse, abort
 from bulletapi.base import bullet_api, bullet_rest_api
 
+
+##########################################
+##    Temp Mock Data                    ##
+##########################################
 mockpageslist = {
     'indexroute',
     'kevin',
@@ -63,6 +67,11 @@ mockpages = {
 }
 
 
+##########################################
+##    Restful                           ##
+##########################################
+
+# REQUEST PARSER
 reqparser = reqparse.RequestParser()
 reqparser.add_argument('data')
 
