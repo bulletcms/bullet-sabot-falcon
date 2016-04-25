@@ -1,2 +1,2 @@
 from .base import bullet_api
-from . import pages
+from .register import bullet_register

@@ -57,8 +57,7 @@ class GCDService(DataService):
 
     def change_page_path(self, old_path, new_path):
         with self._client.transaction():
-            page = self._client.get(self._client.key('Pagelist', 'main', 'Page', old_path))
-
+            page = self.get_page(old_path)
             self.add_page(new_path, page['title'], page['tags'], page['content'])
             self.remove_page(old_path)
 

@@ -1,4 +1,4 @@
-from flask.ext.restful import Resource, reqparse, abort
+from flask_restful import Resource, reqparse, abort
 
 ##########################################
 ##    Restful                           ##
@@ -14,6 +14,11 @@ def abort_if_page_dne(func):
 
 class PageResource:
     def __init__(self, api, data_service):
+        '''
+        :param api: flask-restful api
+        :param data_service: dataservice from bulletapi.storage
+        :return: object that registers itself to the provided api
+        '''
         self._api = api
         self._data_service = data_service
         # REQUEST PARSER
@@ -41,7 +46,7 @@ class PageResource:
             @abort_if_page_dne
             def delete(self, page_id):
                 self._data_service.remove_page(page_id)
-                return ('', 204)
+                return '', 204
 
             def post(self, page_id):
                 data = self._argparser.parse_args()['data']
@@ -61,7 +66,7 @@ class PageResource:
                 if 'content' in data:
                     content = data['content']
                 self._data_service.update_page(page_id, title, tags, content)
-                return ('', 201)
+                return '', 201
 
 
         self._api.add_resource(Pages, '/pages')
