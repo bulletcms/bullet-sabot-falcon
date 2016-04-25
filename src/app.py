@@ -1,12 +1,11 @@
 from flask import Flask
 from flask_cors import CORS
-from bulletapi import bullet_api, bullet_register
-from config import CONFIG
+from bulletapi import bullet_api, bullet_register, Services
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 CORS(app)
 
-bullet_register(CONFIG['dataservice'])
+bullet_register(Services.MockService())
 
 app.register_blueprint(bullet_api, url_prefix='/api')
 
