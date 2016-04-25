@@ -93,7 +93,7 @@ class MockService(DataService):
         }
 
     def get_pagelist(self):
-        return mockpages.keys()
+        return list(mockpages.keys())
 
     def change_page_path(self, old_path, new_path):
         page = self.get_page(old_path)

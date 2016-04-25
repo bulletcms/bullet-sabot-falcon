@@ -8,7 +8,7 @@ def abort_if_page_dne(func):
     def decorated_func(self, page_id):
         if not self._data_service.has_page(page_id):
             abort(404, message='Page {} does not exist'.format(page_id))
-        return func(page_id)
+        return func(self, page_id)
     return decorated_func
 
 
