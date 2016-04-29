@@ -12,4 +12,6 @@
   - [ ] blog
 - [ ] create configuration via config.py
   - [ ] should read from cassandra database
+- [ ] socketio, haproxy
 - [x] create test script
+
