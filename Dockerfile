@@ -1,9 +1,10 @@
-FROM alpine:latest
+FROM python:alpine
+
 MAINTAINER Kevin Wang <wangkevin448@gmail.com>
 
 COPY src/ /app/
-RUN apk add --no-cache python3 && python3 -m ensurepip && pip3 install --upgrade pip
-RUN apk add --no-cache --virtual build-dependencies build-base python3-dev && pip3 install --no-cache-dir --upgrade -r /app/requirements.txt && apk del build-dependencies
+
+RUN apk add --no-cache --virtual build-dependencies gcc musl-dev && pip install --no-cache-dir --upgrade -r /app/requirements.txt && apk del build-dependencies && apk -vv info
 
 VOLUME /app/static
 
