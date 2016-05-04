@@ -12,4 +12,4 @@ EXPOSE 5000
 
 WORKDIR /app
 
-CMD ["gunicorn", "--workers=2", "--worker-class=gevent", "-b 0.0.0.0:5000", "wsgi:sabotapp"]
+CMD ["gunicorn", "--workers=4", "--worker-class=gevent", "-b 0.0.0.0:5000", "wsgi:sabotapp"]
