@@ -2,5 +2,5 @@ Flask
 flask-cors
 flask-restful
 gcloud
-gevent
+meinheld
 gunicorn
