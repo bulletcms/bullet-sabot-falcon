@@ -2,7 +2,7 @@
 ##    Falcon Module                     ##
 ##########################################
 
-class FalconApiModule:
+class FalconModule:
     def __init__(self, name, configuration={}):
         '''
         :param name: str
@@ -34,24 +34,34 @@ class FalconApiModule:
             api.add_route('{0}{1}'.format(url_prefix, uri), resource)
 
 
-class FalconApiResource:
+class FalconComponent:
     def __init__(self):
-        self._resources = []
+        self._dependencies = {}
 
-    def add_resource(self, path, resource, dependencies=[]):
-        self._resources.append((path, resource, dependencies))
+    def inject(self, key, service):
+        self._dependencies[key].inject(service)
+
+    def instantiate(self):
+        '''
+        :return: tuple(resources: list of tuples(path: str, resource: Falcon Resource objects), dependencies: Dependency objects)
+        '''
+        raise NotImplementedError("Not implemented")
 
     def register(self, api):
-        for path, resource, dependencies in self._resources:
+        resources, dependencies = self.instantiate()
+        for path, resource in resources:
             api.add_route(path, resource())
 
 class Dependency:
     def __init__(self, key):
         self._key = key
+        self._service = None
 
     def inject(self, service):
         self._service = service
 
     @property
     def service(self):
+        if self._service is None:
+            raise RuntimeError("Service not injected")
         return self._service
