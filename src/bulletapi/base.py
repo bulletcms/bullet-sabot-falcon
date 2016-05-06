@@ -1,5 +1,8 @@
-from flask import Blueprint
-from flask_restful import Api
+from .falconapimodule import FalconApiModule
 
-bullet_api = Blueprint('bulletapi', __name__)
-bullet_rest_api = Api(bullet_api)
+from .pages import PagesResource
+
+def bullet_api():
+    FalconApiModule('bullet_api')
+
+PagesResource().register(bullet_api)

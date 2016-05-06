@@ -1,73 +1,79 @@
-from flask_restful import Resource, reqparse, abort
+import json
+from falcon import HTTPNotFound, HTTPError, HTTP_200, HTTP_201, HTTP_204, HTTP_400
+from .falconapimodule import FalconApiResource, Dependency
 
 ##########################################
-##    Restful                           ##
+##    Pages API                         ##
 ##########################################
 
 def abort_if_page_dne(func):
-    def decorated_func(self, page_id):
-        if not self._data_service.has_page(page_id):
-            abort(404, message='Page {} does not exist'.format(page_id))
-        return func(self, page_id)
+    def decorated_func(self, req, res, page_id):
+        if not self._database.service.has_page(page_id):
+            raise HTTPNotFound()
+        func(self, req, res, page_id)
     return decorated_func
 
+class PagesCollection:
+    def __init__(self, database):
+        self._database = database
 
-class PageResource:
-    def __init__(self, api, data_service):
-        '''
-        :param api: flask-restful api
-        :param data_service: dataservice from bulletapi.storage
-        :return: object that registers itself to the provided api
-        '''
-        self._api = api
-        self._data_service = data_service
-        # REQUEST PARSER
-        self._argparser = reqparse.RequestParser()
-        self._argparser.add_argument('data', required=True)
+    def on_get(self, req, res):
+        res.status = HTTP_200
+        res.body = json.dumps({'data': self._database.service.get_pagelist()})
 
-    def register(self):
+class Page:
+    def __init__(self, database):
+        self._database = database
 
-        class Pages(Resource):
-            _data_service = self._data_service
-            _argparser = self._argparser
+    @abort_if_page_dne
+    def on_get(self, req, res, page_id):
+        res.status = HTTP_200
+        res.body = json.dumps({'data': self._database.service.get_page(page_id)})
 
-            def get(self):
-                return {'data': self._data_service.get_pagelist()}
+    @abort_if_page_dne
+    def on_delete(self, req, res, page_id):
+        self._database.service.remove_page(page_id)
+        res.status = HTTP_204
+        res.body = json.dumps({'data': 'deleted page {}'.format(page_id)})
+
+    def on_post(self, req, res, page_id):
+        try:
+            raw_json = req.stream.read()
+        except Exception as ex:
+            raise HTTPError(HTTP_400, 'Error', ex.message)
+
+        try:
+            data = json.loads(raw_json, encoding='utf-8')['data']
+            self._database.service.add_page(page_id, data['title'], data['tags'], data['content'])
+            res.status = HTTP_201
+            res.body = json.dumps({'data': 'posted page {}'.format(page_id)})
+        except ValueError:
+            raise HTTPError(HTTP_400, 'Invalid JSON', 'Could not decode the request body.')
+
+    @abort_if_page_dne
+    def put(self, req, res, page_id):
+        try:
+            raw_json = req.stream.read()
+        except Exception as ex:
+            raise HTTPError(HTTP_400, 'Error', ex.message)
+
+        try:
+            data = json.loads(raw_json, encoding='utf-8')['data']
+            title = None
+            tags = None
+            content = None
+            if 'title' in data:
+                title = data['title']
+            if 'tags' in data:
+                tags = data['tags']
+            if 'content' in data:
+                content = data['content']
+            self._database.service.update_page(page_id, title, tags, content)
+            res.status = HTTP_201
+            res.body = json.dumps({'data': 'put page {}'.format(page_id)})
+        except ValueError:
+            raise HTTPError(HTTP_400, 'Invalid JSON', 'Could not decode the request body.')
 
 
-        class Page(Resource):
-            _data_service = self._data_service
-            _argparser = self._argparser
-
-            @abort_if_page_dne
-            def get(self, page_id):
-                return {'data': self._data_service.get_page(page_id)}
-
-            @abort_if_page_dne
-            def delete(self, page_id):
-                self._data_service.remove_page(page_id)
-                return '', 204
-
-            def post(self, page_id):
-                data = self._argparser.parse_args()['data']
-                self._data_service.add_page(page_id, data['title'], data['tags'], data['content'])
-                return '', 201
-
-            @abort_if_page_dne
-            def put(self, page_id):
-                data = self._argparser.parse_args(strict=True)['data']
-                title = None
-                tags = None
-                content = None
-                if 'title' in data:
-                    title = data['title']
-                if 'tags' in data:
-                    tags = data['tags']
-                if 'content' in data:
-                    content = data['content']
-                self._data_service.update_page(page_id, title, tags, content)
-                return '', 201
-
-
-        self._api.add_resource(Pages, '/pages')
-        self._api.add_resource(Page, '/pages/<page_id>')
+api.add_route('/pages', PagesCollection(self._data_service))
+api.add_route('/pages/{page_id}', Page(self._data_service))
