@@ -11,7 +11,7 @@ mockpages = {
             },
             {
                 'component': 'p',
-                'children': 'hi, i am kevin'
+                'children': 'Hi, I am Kevin'
             },
             {
                 'component': 'DateView',
@@ -32,7 +32,7 @@ mockpages = {
             },
             {
                 'component': 'p',
-                'children': 'this is the about page'
+                'children': 'BulletAPI is a minimal and configural system for content management.'
             },
             {
                 'component': 'DateView',
@@ -44,16 +44,16 @@ mockpages = {
         ]
     },
     'indexroute': {
-        'title': 'Home',
+        'title': 'BulletAPI',
         'tags': [],
         'content': [
             {
                 'component': 'h1',
-                'children': 'Home'
+                'children': 'BulletAPI'
             },
             {
                 'component': 'p',
-                'children': 'this is just a test home page for the index route'
+                'children': 'Hello World!'
             },
             {
                 'component': 'DateView',

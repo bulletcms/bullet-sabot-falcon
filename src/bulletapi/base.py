@@ -1,8 +1,7 @@
-from .falconapimodule import FalconApiModule
+from .module import Fmod
 
-from .pages import PagesResource
+from .pages import PageContainer, MAGIC_DATA_SERVICE
 
-def bullet_api():
-    FalconApiModule('bullet_api')
+bullet_api = Fmod.Module('bullet_api', [MAGIC_DATA_SERVICE])
 
-PagesResource().register(bullet_api)
+PageContainer(bullet_api)

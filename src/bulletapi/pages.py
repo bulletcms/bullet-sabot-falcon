@@ -1,6 +1,7 @@
 import json
 from falcon import HTTPNotFound, HTTPError, HTTP_200, HTTP_201, HTTP_204, HTTP_400
-from .falconapimodule import FalconApiResource, Dependency
+from .module import Fmod
+
 
 ##########################################
 ##    Pages API                         ##
@@ -13,6 +14,8 @@ def abort_if_page_dne(func):
         func(self, req, res, page_id)
     return decorated_func
 
+
+# PAGE COLLECTION RESOURCE
 class PagesCollection:
     def __init__(self, data_service):
         self._data_service = data_service
@@ -21,6 +24,8 @@ class PagesCollection:
         res.status = HTTP_200
         res.body = json.dumps({'data': self._data_service.get_pagelist()})
 
+
+# PAGE RESOURCE
 class Page:
     def __init__(self, data_service):
         self._data_service = data_service
@@ -75,5 +80,14 @@ class Page:
             raise HTTPError(HTTP_400, 'Invalid JSON', 'Could not decode the request body.')
 
 
-api.add_route('/pages', PagesCollection(self._data_service))
-api.add_route('/pages/{page_id}', Page(self._data_service))
+MAGIC_DATA_SERVICE = 'data_service'
+
+class PageContainer(Fmod.Container):
+    def __init__(self, provider):
+        self._data_dependency = provider.provide(MAGIC_DATA_SERVICE)
+
+    def config(self):
+        return [
+            ('/pages', PagesCollection(self._data_dependency.service)),
+            ('/pages/{page_id}', Page(self._data_dependency.service))
+        ]

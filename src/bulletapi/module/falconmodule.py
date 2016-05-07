@@ -12,6 +12,7 @@ class Module:
         '''
         self._name = name
         self._routes = []
+        self._containers = []
         self._provider = Provider(dependency_keys)
 
     @property
@@ -22,12 +23,42 @@ class Module:
     def provider(self):
         return self._provider
 
+    @property
+    def provider_keys(self):
+        '''
+        wrapper for provider.keys
+        '''
+        return self.provider.keys
+
+    def inject(self, key, service):
+        '''
+        wrapper for provider.inject
+        '''
+        self.provider.inject(key, service)
+        return self
+
+    def add_container(self, container):
+        '''
+        :param container: falcon container object
+        '''
+        self._containers.append(container)
+        return self
+
+    def build(self):
+        '''
+        to be run after dependency injection finished and before register
+        '''
+        for container in self._containers:
+            container.register(self)
+        return self
+
     def add_route(self, uri, resource):
         '''
         :param uri: str
         :param resource: falcon resource object
         '''
         self._routes.append((uri, resource))
+        return self
 
     def register(self, falcon_api, url_prefix=''):
         '''

@@ -3,16 +3,30 @@
 ##########################################
 
 class Container:
-    def inject(self, key, service):
-        self._dependencies[key].inject(service)
-
-    def instantiate(self, configuration):
+    def __init__(self, module):
         '''
-        :return: resources: list of tuples(path: str, resource: Falcon Resource objects)
+        adds self to the module and initializes dependencies
+        :param module: Falcon Module object
+        '''
+        self.initialize(module.provider)
+        module.add_container(self)
+
+    def initialize(self, provider):
+        '''
+        initialize local dependencies
+        :param provider: api dependency provider
         '''
         raise NotImplementedError("Not implemented")
 
-    def register(self, api):
-        resources = self.instantiate(api.)
-        for path, resource in resources:
-            api.add_route(path, resource)
+    def config(self):
+        '''
+        :return: list of resource tuples(path: str, resource: Falcon Resource objects)
+        '''
+        raise NotImplementedError("Not implemented")
+
+    def register(self, module):
+        '''
+        :param module: Falcon Module object
+        '''
+        for path, resource in self.config():
+            module.add_route(path, resource)

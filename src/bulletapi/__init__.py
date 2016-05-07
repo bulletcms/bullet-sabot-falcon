@@ -1,4 +1,4 @@
 from .base import bullet_api
-from .storage import Services
+from .storage import DataServices
 
-bullet_api
+__all__ = ['bullet_api', 'DataServices']
