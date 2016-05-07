@@ -1,17 +1,17 @@
 # TODO
 
-## flask app
+## REST api
 
-- [x] routing for static assets
-- [ ] routing for api calls
-  - [x] use blueprints to register api
+- [x] routing for api calls
   - [ ] forum
-  - [ ] pages
+  - [x] pages
   - [ ] dashboard
     - [ ] should modify configuration
   - [ ] blog
-- [ ] refactor api to falcon from flask
-- [ ] create configuration via config.py
-  - [ ] should read from cassandra database
 - [ ] socketio, haproxy
+- [ ] gunicorn custom application
+  - [ ] gunicorn worker class
+
+### Done
 - [x] create test script
+- [x] refactor api to falcon from flask
