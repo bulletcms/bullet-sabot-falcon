@@ -31,4 +31,4 @@ class Provider:
         '''
         :return: dependency of key
         '''
-        return self._provider[key]
+        return self._dependencies[key]

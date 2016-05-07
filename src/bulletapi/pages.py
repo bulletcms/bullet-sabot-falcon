@@ -83,7 +83,7 @@ class Page:
 MAGIC_DATA_SERVICE = 'data_service'
 
 class PageContainer(Fmod.Container):
-    def __init__(self, provider):
+    def initialize(self, provider):
         self._data_dependency = provider.provide(MAGIC_DATA_SERVICE)
 
     def config(self):
