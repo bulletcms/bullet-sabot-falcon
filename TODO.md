@@ -9,8 +9,9 @@
     - [ ] should modify configuration
   - [ ] blog
 - [ ] socketio, haproxy
-- [ ] gunicorn custom application
-  - [ ] gunicorn worker class
+- [x] gunicorn custom application
+  - [x] gunicorn worker class
+  - [ ] make gunicorn import workers conditionally
 
 ### Done
 - [x] create test script
