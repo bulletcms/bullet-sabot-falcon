@@ -2,9 +2,11 @@ FROM python:alpine
 
 MAINTAINER Kevin Wang <wangkevin448@gmail.com>
 
-COPY src/ /app/
+COPY src/requirements.txt /app/
 
 RUN apk add --no-cache --virtual build-dependencies gcc musl-dev && pip install --no-cache-dir --upgrade -r /app/requirements.txt && apk del build-dependencies && apk -vv info
+
+COPY src/ /app/
 
 VOLUME /app/static
 
@@ -12,4 +14,4 @@ EXPOSE 5000
 
 WORKDIR /app
 
-CMD ["gunicorn", "--workers=4", "--worker-class=meinheld.gmeinheld.MeinheldWorker", "-b 0.0.0.0:5000", "wsgi:sabotapp"]
+CMD ["python", "capsule.py"]
