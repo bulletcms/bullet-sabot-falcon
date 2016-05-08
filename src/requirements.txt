@@ -1,4 +1,5 @@
 falcon
+ujson
 gcloud
 meinheld
 gunicorn
