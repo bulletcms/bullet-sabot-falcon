@@ -26,14 +26,34 @@ $ ./build.sh
 
 ## Run
 
+- Start 1 container
 ```zsh
-$ ./run.sh
+$ ./start.sh
+```
+- Start 3 containers
+```zsh
+$ ./start3.sh
+```
+- Stop 1 container
+```zsh
+$ ./stop.sh
+```
+- Stop 3 containers
+```zsh
+$ ./stop3.sh
 ```
 
 
 ## Test
-
+- Build the virtual env
 ```zsh
-$ curl localhost:5000
-# response: Hello World!
+$ ./test-build.sh
+```
+- Run using the virtual env
+```zsh
+$ ./test-run.sh
+```
+- Make an http request
+```zsh
+$ curl localhost:5000/api/pages
 ```
