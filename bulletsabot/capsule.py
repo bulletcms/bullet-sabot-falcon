@@ -1,7 +1,5 @@
 from gunicorn.app.base import BaseApplication
 from gunicorn.six import iteritems
-from app import app as application
-from config import CONFIG
 
 from meinheld.gmeinheld import MeinheldWorker
 
@@ -9,7 +7,7 @@ WORKERS = {
     'meinheld': 'capsule.MeinheldWorker'
 }
 
-def options(cfg):
+def gen_options(cfg):
     if 'worker_class' in cfg:
         # only import workers if necessary
         if cfg['worker_class'] == 'meinheld':
@@ -23,7 +21,7 @@ def options(cfg):
 
 class Capsule(BaseApplication):
     def __init__(self, app, options={}):
-        self.options = options
+        self.options = gen_options(options)
         self.application = app
         super(Capsule, self).__init__()
 
@@ -37,7 +35,3 @@ class Capsule(BaseApplication):
 
     def load(self):
         return self.application
-
-
-if __name__ == '__main__':
-    Capsule(application, options=options(CONFIG['gunicorn'])).run()
