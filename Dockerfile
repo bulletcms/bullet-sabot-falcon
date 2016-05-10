@@ -1,10 +1,10 @@
-FROM python:alpine
+FROM alpine
 
 MAINTAINER Kevin Wang <wangkevin448@gmail.com>
 
-COPY bulletsabot/requirements.txt /app/
+RUN apk add --no-cache python3 && apk -vv info
 
-RUN apk add --no-cache --virtual build-dependencies gcc musl-dev && pip install --no-cache-dir --upgrade -r /app/requirements.txt && apk del build-dependencies && apk -vv info
+COPY build/bulletsabot.pex /
 
 COPY bulletsabot/ /app/
 
@@ -14,4 +14,4 @@ EXPOSE 5000
 
 WORKDIR /
 
-CMD ["python", "app"]
+CMD ["./bulletsabot.pex", "app/__main__.py"]
