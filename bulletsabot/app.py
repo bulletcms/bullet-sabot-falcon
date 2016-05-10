@@ -1,5 +1,5 @@
 from falcon import API
-from .bulletapi import bullet_api, DataServices
+from bulletapi import bullet_api, DataServices
 
 app = API()
 
