@@ -12,7 +12,7 @@
 - [x] gunicorn custom application
   - [x] gunicorn worker class
   - [ ] make gunicorn import workers conditionally
-
+- [ ] authentication
 ### Done
 - [x] create test script
 - [x] refactor api to falcon from flask
