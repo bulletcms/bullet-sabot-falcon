@@ -47,7 +47,7 @@ $ ./stop3.sh
 ## Test
 - Build the virtual env
 ```zsh
-$ ./test-build.sh
+$ ./venv_setup.sh
 ```
 - Run using the virtual env
 ```zsh

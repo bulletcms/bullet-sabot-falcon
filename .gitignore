@@ -1,4 +1,7 @@
 venv/**
 build/**
+dist/**
+pexdist/**
+*.egg-info/**
 **/__pycache__/**
 **/.idea/**
