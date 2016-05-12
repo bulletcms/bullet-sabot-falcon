@@ -13,6 +13,8 @@
   - [x] gunicorn worker class
   - [ ] make gunicorn import workers conditionally
 - [ ] authentication
+  - [ ] need conditional authentication for certain routes
+
 ### Done
 - [x] create test script
 - [x] refactor api to falcon from flask
