@@ -12,7 +12,7 @@
 - [ ] socketio, haproxy
 - [x] gunicorn custom application
   - [x] gunicorn worker class
-  - [ ] make gunicorn import workers conditionally
+  - [x] make gunicorn import workers conditionally
 - [ ] authentication
   - [ ] need conditional authentication for certain routes
 
