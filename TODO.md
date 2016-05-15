@@ -3,7 +3,7 @@
 ## REST api
 
 - [x] routing for api calls
-  - [ ] should use falcon hooks
+  - [x] should use falcon hooks
   - [ ] forum
   - [x] pages
   - [ ] dashboard

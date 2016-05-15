@@ -1,6 +1,6 @@
 from importlib import import_module
 
-STATUSES = set(200, 201, 204, 400)
+STATUSES = set([200, 201, 204, 400])
 
 HTTPSTATUS = {}
 

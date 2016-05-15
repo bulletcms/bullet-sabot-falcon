@@ -1,17 +1,19 @@
+from importlib import import_module
 from gunicorn.app.base import BaseApplication
 from gunicorn.six import iteritems
 
-from meinheld.gmeinheld import MeinheldWorker
-
 WORKERS = {
-    'meinheld': 'capsule.MeinheldWorker'
+    'meinheld': 'capsule.Worker'
 }
+
+Worker = None
 
 def gen_options(cfg):
     if 'worker_class' in cfg:
         # only import workers if necessary
         if cfg['worker_class'] == 'meinheld':
-            pass
+            global Worker
+            Worker = import_module('meinheld.gmeinheld.MeinheldWorker')
 
     return {
         'bind': '{0}:{1}'.format(cfg['host'], cfg['port']) or '0.0.0.0:8080',

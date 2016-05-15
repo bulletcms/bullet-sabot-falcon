@@ -1,6 +1,6 @@
 import ujson
 from falcon import HTTPNotFound, HTTPBadRequest, before
-from falext import httpstatus
+from .falext import httpstatus
 from .module import Fmod
 
 
