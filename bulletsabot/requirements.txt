@@ -1,5 +1,6 @@
 falcon
 ujson
-gcloud
 meinheld
 gunicorn
+oauth2client
+gcloud
