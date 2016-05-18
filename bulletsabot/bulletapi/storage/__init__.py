@@ -1,6 +1,5 @@
 from .gcdservice import GCDService
-from .mockservice import MockService
+from .mockdataservice import MockDataService
+from .dataservice import DataService
 
-class DataServices:
-    GCDService = GCDService
-    MockService = MockService
+__all__ = ['GCDService', 'MockDataService', 'DataService']

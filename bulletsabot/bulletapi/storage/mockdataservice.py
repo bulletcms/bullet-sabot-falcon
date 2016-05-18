@@ -67,7 +67,7 @@ mockpages = {
 }
 
 
-class MockService(DataService):
+class MockDataService(DataService):
     def update_page(self, path, title=None, tags=None, content=None):
         if title is not None:
             mockpages[path]['title'] = title

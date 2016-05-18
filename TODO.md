@@ -15,6 +15,7 @@
   - [x] make gunicorn import workers conditionally
 - [ ] authentication
   - [ ] need conditional authentication for certain routes
+  - [ ] google oauth playground
 
 ### Done
 - [x] create test script
