@@ -7,13 +7,18 @@ class AuthService:
 
     def login():
         '''
-        gets credentials from service and stores in cache
+        get credentials from service and stores in cache
         '''
         raise NotImplementedError("Not implemented")
 
-    def logout(user_id):
+    def logout():
         '''
-        invalidates credentials
-        :param user_id: id of user session
+        invalidate credentials
+        '''
+        raise NotImplementedError("Not implemented")
+
+    def get_idinfo():
+        '''
+        gets info from id
         '''
         raise NotImplementedError("Not implemented")

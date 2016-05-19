@@ -1,7 +1,7 @@
 from oauth2client import client
 from .authservice import AuthService
 
-class MockAuthService(AuthService):
+class GoogleOAuthService(AuthService):
     def __init__(self, client_id, client_ids):
         '''
         :param client_id: client_id of the api
@@ -23,18 +23,33 @@ class MockAuthService(AuthService):
             return (False, "Wrong issuer.")
         return (True, idinfo)
 
-    def login(self, auth_code):
+    def login(self, id_token):
         '''
-        :param auth_code: authorization code from client
+        :param id_token: id_token from client
         '''
-        valid, idinfo = self.verify(auth_code)
+        valid, idinfo = self.verify(id_token)
         if not valid:
+            # attempt to get a new id_token
             pass
         else:
-            userid = idinfo['sub']
-            email = idinfo['email']
-            name = idinfo['name']
-            primary_name = idinfo['given_name']
 
-    def logout():
+            return idinfo['sub']  # userid
+
+    def logout(self, id_token):
+        # invalidate id_token
         pass
+
+    def get_idinfo(self, id_token):
+        '''
+        :param id_token: id_token from client
+        '''
+        idinfo = None  # get idinfo using api, not verification
+
+        userinfo = {}
+
+        userinfo['userid'] = idinfo['sub']
+        userinfo['email'] = idinfo['email']
+        userinfo['name'] = idinfo['name']
+        userinfo['primary_name'] = idinfo['given_name']
+
+        return userinfo
