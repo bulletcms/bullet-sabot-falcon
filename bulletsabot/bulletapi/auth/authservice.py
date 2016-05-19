@@ -17,10 +17,3 @@ class AuthService:
         :param user_id: id of user session
         '''
         raise NotImplementedError("Not implemented")
-
-    def store_credentials(user_id):
-        '''
-        stores credentials to cache
-        :param user_id: id of user session
-        '''
-        raise NotImplementedError("Not implemented")
