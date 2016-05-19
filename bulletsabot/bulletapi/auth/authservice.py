@@ -1,4 +1,10 @@
 class AuthService:
+    def verify():
+        '''
+        verifies given code
+        '''
+        raise NotADirectoryError("Not implemented")
+
     def login():
         '''
         gets credentials from service and stores in cache
@@ -12,9 +18,9 @@ class AuthService:
         '''
         raise NotImplementedError("Not implemented")
 
-    def credentials(user_id):
+    def store_credentials(user_id):
         '''
-        gets credentials from cache
+        stores credentials to cache
         :param user_id: id of user session
         '''
         raise NotImplementedError("Not implemented")
