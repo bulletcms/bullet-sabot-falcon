@@ -16,6 +16,7 @@
 - [ ] authentication
   - [ ] need conditional authentication for certain routes
   - [ ] google oauth playground
+  - [ ] support multiple oauth services (goog, fb)
 
 ### Done
 - [x] create test script
