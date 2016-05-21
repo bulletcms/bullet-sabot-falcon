@@ -37,18 +37,13 @@ class GCDService(DataService):
         self._client.put(page)
 
 
-    def update_page(self, path, title=None, tags=None, content=None):
+    def update_page(self, path, dictionary):
         with self._client.transaction():
             page = self._client.get(self._client.key('Pagelist', 'main', 'Page', path))
 
-            if title is not None:
-                page['title'] = title
-
-            if tags is not None:
-                page['tags'] = tags
-
-            if content is not None:
-                page['content'] = content
+            for key, value in dictionary.items():
+                if key in self.pageprops:
+                    page[key] = value
 
             self._client.put(page)
 

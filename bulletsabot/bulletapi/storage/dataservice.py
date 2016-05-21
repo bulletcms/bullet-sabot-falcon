@@ -4,11 +4,35 @@
 
 class DataService:
 
+    # USERS
+    userprops_public = set(['username'])
+    userprops_private = set(['passhash', 'googleoauthcode'])
+
+    def add_user(self, user_id, username, public_props, private_props):
+        raise NotImplementedError("Not implemented")
+
+    def remove_user(self, user_id):
+        raise NotImplementedError("Not implemented")
+
+    def update_user(self, user_id, public_props, private_props):
+        raise NotImplementedError("Not implemented")
+
+    def get_user_public(self, user_id=None, username=None):
+        raise NotImplementedError("Not implemented")
+
+    def get_user(self, user_id=None, username=None):
+        raise NotImplementedError("Not implemented")
+
     # PAGE TRANSACTIONS
+    pageprops = set(['title', 'tags', 'content'])
+
     def add_page(self, path, title, tags, content):
         raise NotImplementedError("Not implemented")
 
-    def update_page(self, path, title=None, tags=None, content=None):
+    def update_page(self, path, dictionary):
+        '''
+        dictionary: title, tags, content
+        '''
         raise NotImplementedError("Not implemented")
 
     def remove_page(self, path):

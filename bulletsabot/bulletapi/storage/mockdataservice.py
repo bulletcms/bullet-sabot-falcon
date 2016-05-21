@@ -66,15 +66,50 @@ mockpages = {
     }
 }
 
+mockusers = {}
+
 
 class MockDataService(DataService):
-    def update_page(self, path, title=None, tags=None, content=None):
-        if title is not None:
-            mockpages[path]['title'] = title
-        if tags is not None:
-            mockpages[path]['tags'] = tags
-        if content is not None:
-            mockpages[path]['content'] = content
+    def add_user(self, user_id, username, public_props, private_props):
+        user = {}
+        for key, value in public_props.items():
+            if key in self.userprops_public:
+                user['public'][key] = value
+        for key, value in private_props.items():
+            if key in self.userprops_private:
+                user['private'][key] = value
+        user['public']['username'] = username
+
+        mockusers[user_id] = user
+
+    def remove_user(self, user_id):
+        del mockusers[user_id]
+
+    def update_user(self, user_id, public_props, private_props):
+        user = {}
+        for key, value in public_props.items():
+            if key in self.userprops_public:
+                user['public'][key] = value
+        for key, value in private_props.items():
+            if key in self.userprops_private:
+                user['private'][key] = value
+
+        mockusers[user_id] = {**mockusers[user_id], **user}
+
+    def get_user_public(self, user_id):
+        return mockusers[user_id]['public']
+
+    def get_user(self, user_id):
+        return mockusers[user_id]
+
+    def update_page(self, path, dictionary):
+        page = {}
+
+        for key, value in dictionary.items():
+            if key in self.pageprops:
+                page[key] = value
+
+        mockpages[path] = {**mockpages[path], **page}
 
     def remove_page(self, path):
         del mockpages[path]
