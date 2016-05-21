@@ -23,25 +23,26 @@ class GCDService(DataService):
 
 
     # PAGE TRANSACTIONS
-    def add_page(self, path, title, tags, content):
+    def add_page(self, path, props):
         page = datastore.Entity(
             self._client.key('Pagelist', 'main', 'Page', path),
             exclude_from_indexes=['title', 'content']
         )
-        page.update({
-            'path': path,
-            'tags': tags,
-            'title': title,
-            'content': content
-        })
+
+        validated_props = {'path': path}
+        for key, value in props.items():
+            if key in self.pageprops:
+                validated_props[key] = value
+
+        page.update(validated_props)
         self._client.put(page)
 
 
-    def update_page(self, path, dictionary):
+    def update_page(self, path, props):
         with self._client.transaction():
             page = self._client.get(self._client.key('Pagelist', 'main', 'Page', path))
 
-            for key, value in dictionary.items():
+            for key, value in props.items():
                 if key in self.pageprops:
                     page[key] = value
 

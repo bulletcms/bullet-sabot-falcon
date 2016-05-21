@@ -102,10 +102,10 @@ class MockDataService(DataService):
     def get_user(self, user_id):
         return mockusers[user_id]
 
-    def update_page(self, path, dictionary):
+    def update_page(self, path, props):
         page = {}
 
-        for key, value in dictionary.items():
+        for key, value in props.items():
             if key in self.pageprops:
                 page[key] = value
 
@@ -120,12 +120,14 @@ class MockDataService(DataService):
     def has_page(self, path):
         return path in self.get_pagelist()
 
-    def add_page(self, path, title, tags, content):
-        mockpages[path] = {
-            'title': title,
-            'tags': tags,
-            'content': content
-        }
+    def add_page(self, path, props):
+        page = {}
+
+        for key, value in props.items():
+            if key in self.pageprops:
+                page[key] = value
+
+        mockpages[path] = page
 
     def get_pagelist(self):
         return list(mockpages.keys())

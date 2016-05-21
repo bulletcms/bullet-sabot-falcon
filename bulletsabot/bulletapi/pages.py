@@ -47,7 +47,7 @@ class Page:
 
         try:
             data = ujson.loads(raw_json, encoding='utf-8')['data']
-            self._data_service.add_page(page_id, data['title'], data['tags'], data['content'])
+            self._data_service.add_page(page_id, data)
             res.status = httpstatus(201)
             res.body = ujson.dumps({'data': 'posted page {}'.format(page_id)})
         except ValueError:
@@ -62,16 +62,7 @@ class Page:
 
         try:
             data = ujson.loads(raw_json, encoding='utf-8')['data']
-            title = None
-            tags = None
-            content = None
-            if 'title' in data:
-                title = data['title']
-            if 'tags' in data:
-                tags = data['tags']
-            if 'content' in data:
-                content = data['content']
-            self._data_service.update_page(page_id, title, tags, content)
+            self._data_service.update_page(page_id, data)
             res.status = httpstatus(201)
             res.body = ujson.dumps({'data': 'put page {}'.format(page_id)})
         except ValueError:
