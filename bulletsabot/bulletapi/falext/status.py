@@ -1,5 +1,3 @@
-from importlib import import_module
-
 STATUSES = set([200, 201, 204, 400])
 
 HTTPSTATUS = {}
@@ -13,5 +11,6 @@ def httpstatus(code):
     if code in HTTPSTATUS:
         return HTTPSTATUS[code]
     elif code in STATUSES:
-        HTTPSTATUS[code] = import_module('falcon.HTTP_{0}'.format(code))
+        import falcon
+        HTTPSTATUS[code] = getattr(falcon, 'HTTP_{0}'.format(code))
         return HTTPSTATUS[code]

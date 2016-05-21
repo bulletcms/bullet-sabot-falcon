@@ -46,7 +46,7 @@ class Page:
             raise HTTPBadRequest('Error', ex.message)
 
         try:
-            data = ujson.loads(raw_json, encoding='utf-8')['data']
+            data = ujson.loads(raw_json)['data']
             self._data_service.add_page(page_id, data)
             res.status = httpstatus(201)
             res.body = ujson.dumps({'data': 'posted page {}'.format(page_id)})
@@ -61,7 +61,7 @@ class Page:
             raise HTTPBadRequest('Error', ex.message)
 
         try:
-            data = ujson.loads(raw_json, encoding='utf-8')['data']
+            data = ujson.loads(raw_json)['data']
             self._data_service.update_page(page_id, data)
             res.status = httpstatus(201)
             res.body = ujson.dumps({'data': 'put page {}'.format(page_id)})
