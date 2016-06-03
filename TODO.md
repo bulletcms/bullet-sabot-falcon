@@ -10,9 +10,6 @@
     - [ ] should modify configuration
   - [ ] blog
 - [ ] socketio, haproxy
-- [x] gunicorn custom application
-  - [x] gunicorn worker class
-  - [x] make gunicorn import workers conditionally
 - [ ] authentication
   - [ ] need conditional authentication for certain routes
   - [ ] google oauth playground
@@ -21,3 +18,6 @@
 ### Done
 - [x] create test script
 - [x] refactor api to falcon from flask
+- [x] gunicorn custom application
+  - [x] gunicorn worker class
+  - [x] make gunicorn import workers conditionally
