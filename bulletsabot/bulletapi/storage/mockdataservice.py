@@ -66,11 +66,22 @@ mockpages = {
     }
 }
 
-mockusers = {}
+mockusers = {
+    'kevin': {
+        'public': {
+            'username': 'kevin'
+        },
+        'private': {
+            'passhash': ';akldjsf;laksjdf',
+            'email': 'example@example.com',
+            'googleoauthcode': 'a;slkdfja;slkdjf'
+        }
+    }
+}
 
 
 class MockDataService(DataService):
-    def add_user(self, user_id, username, public_props, private_props):
+    def add_user(self, user_id, public_props, private_props):
         user = {}
         for key, value in public_props.items():
             if key in self.userprops_public:
@@ -78,7 +89,6 @@ class MockDataService(DataService):
         for key, value in private_props.items():
             if key in self.userprops_private:
                 user['private'][key] = value
-        user['public']['username'] = username
 
         mockusers[user_id] = user
 
@@ -96,11 +106,16 @@ class MockDataService(DataService):
 
         mockusers[user_id] = {**mockusers[user_id], **user}
 
+    def has_user(self, user_id):
+        return user_id is not None and user_id in mockusers
+
     def get_user_public(self, user_id):
         return mockusers[user_id]['public']
 
     def get_user(self, user_id):
-        return mockusers[user_id]
+        return {**mockusers[user_id]['public'], **mockusers[user_id]['private']}
+
+
 
     def update_page(self, path, props):
         page = {}

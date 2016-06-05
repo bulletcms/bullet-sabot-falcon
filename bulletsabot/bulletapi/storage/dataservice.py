@@ -6,9 +6,9 @@ class DataService:
 
     # USERS
     userprops_public = set(['username'])
-    userprops_private = set(['passhash', 'googleoauthcode'])
+    userprops_private = set(['passhash', 'email', 'googleoauthcode'])
 
-    def add_user(self, user_id, username, public_props, private_props):
+    def add_user(self, user_id, public_props, private_props):
         raise NotImplementedError("Not implemented")
 
     def remove_user(self, user_id):
@@ -17,10 +17,13 @@ class DataService:
     def update_user(self, user_id, public_props, private_props):
         raise NotImplementedError("Not implemented")
 
-    def get_user_public(self, user_id=None, username=None):
+    def has_user(self, user_id):
         raise NotImplementedError("Not implemented")
 
-    def get_user(self, user_id=None, username=None):
+    def get_user_public(self, user_id):
+        raise NotImplementedError("Not implemented")
+
+    def get_user(self, user_id):
         raise NotImplementedError("Not implemented")
 
     # PAGE TRANSACTIONS

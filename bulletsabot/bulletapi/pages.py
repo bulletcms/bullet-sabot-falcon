@@ -12,6 +12,10 @@ def abort_if_page_dne(req, resp, resource, params):
     if not resource._data_service.has_page(params['page_id']):
         raise HTTPNotFound()
 
+def abort_if_page_exists(req, resp, resource, params):
+    if resource._data_service.has_page(params['page_id']):
+        raise HTTPBadRequest()
+
 
 # PAGE COLLECTION RESOURCE
 class PagesCollection:
@@ -39,6 +43,7 @@ class Page:
         res.status = httpstatus(204)
         res.body = ujson.dumps({'data': 'deleted page {}'.format(page_id)})
 
+    @before(abort_if_page_exists)
     def on_post(self, req, res, page_id):
         try:
             raw_json = req.stream.read()
