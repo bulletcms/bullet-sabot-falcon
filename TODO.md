@@ -14,6 +14,7 @@
   - [ ] need conditional authentication for certain routes
   - [ ] google oauth playground
   - [ ] support multiple oauth services (goog, fb)
+  - [ ] use redis to cache email verification
 
 ### Done
 - [x] create test script
