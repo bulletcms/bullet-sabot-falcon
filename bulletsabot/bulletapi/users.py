@@ -35,7 +35,7 @@ class User:
 
         try:
             data = ujson.loads(raw_json)['data']
-            self._data_service.add_user(user_id, data)
+            self._data_service.add_user(user_id, data['public'], data['private'])
             res.status = httpstatus(201)
             res.body = ujson.dumps({'data': 'added user {}'.format(user_id)})
         except ValueError:

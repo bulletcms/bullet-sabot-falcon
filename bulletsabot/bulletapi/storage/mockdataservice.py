@@ -82,7 +82,10 @@ mockusers = {
 
 class MockDataService(DataService):
     def add_user(self, user_id, public_props, private_props):
-        user = {}
+        user = {
+            'public': {},
+            'private': {}
+        }
         for key, value in public_props.items():
             if key in self.userprops_public:
                 user['public'][key] = value
