@@ -1,4 +1,4 @@
-from oauth2client import client
+from oauth2client import client, crypt
 from .authservice import AuthService
 
 class GoogleOAuthService(AuthService):
@@ -12,39 +12,18 @@ class GoogleOAuthService(AuthService):
         self._client_ids = client_ids
 
     def verify(self, id_token):
-        '''
-        :param token: id_token from client
-        :return: tuple(token validity - bool, idinfo or error)
-        '''
-        idinfo = client.verify_id_token(id_token, self._client_id)
-        if idinfo['aud'] not in self._client_ids:
-            return (False, "Unrecognized client.")
-        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
-            return (False, "Wrong issuer.")
+        try:
+            idinfo = client.verify_id_token(id_token, self._client_id)
+            # If multiple clients access the backend server:
+            if idinfo['aud'] not in self._client_ids:
+                raise crypt.AppIdentityError("Unrecognized client.")
+            if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+                raise crypt.AppIdentityError("Wrong issuer.")
+        except crypt.AppIdentityError:
+            return (False, None)
         return (True, idinfo)
 
-    def login(self, id_token):
-        '''
-        :param id_token: id_token from client
-        '''
-        valid, idinfo = self.verify(id_token)
-        if not valid:
-            # attempt to get a new id_token
-            pass
-        else:
-
-            return idinfo['sub']  # userid
-
-    def logout(self, id_token):
-        # invalidate id_token
-        pass
-
-    def get_idinfo(self, id_token):
-        '''
-        :param id_token: id_token from client
-        '''
-        idinfo = None  # get idinfo using api, not verification
-
+    def get_userinfo(self, idinfo):
         userinfo = {}
 
         userinfo['userid'] = idinfo['sub']
