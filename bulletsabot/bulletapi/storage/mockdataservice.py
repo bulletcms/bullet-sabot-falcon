@@ -72,19 +72,23 @@ mockusers = {
             'username': 'kevin'
         },
         'private': {
-            'passhash': ';akldjsf;laksjdf',
             'email': 'example@example.com',
             'googleoauthcode': 'a;slkdfja;slkdjf'
+        },
+        'passwd': {
+            'hash': 'asdfghjkl;',
+            'salt': 'asdfghjkl;'
         }
     }
 }
 
 
 class MockDataService(DataService):
-    def add_user(self, user_id, public_props, private_props):
+    def add_user(self, user_id, passwd, public_props, private_props):
         user = {
             'public': {},
-            'private': {}
+            'private': {},
+            'pass': {}
         }
         for key, value in public_props.items():
             if key in self.userprops_public:
@@ -92,7 +96,8 @@ class MockDataService(DataService):
         for key, value in private_props.items():
             if key in self.userprops_private:
                 user['private'][key] = value
-
+        user['passwd']['hash'] = passwd['hash']
+        user['passwd']['salt'] = passwd['salt']
         mockusers[user_id] = user
 
     def remove_user(self, user_id):

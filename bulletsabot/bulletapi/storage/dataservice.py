@@ -6,9 +6,9 @@ class DataService:
 
     # USERS
     userprops_public = set(['username'])
-    userprops_private = set(['passhash', 'email', 'googleoauthcode'])
+    userprops_private = set(['email', 'googleoauthcode'])
 
-    def add_user(self, user_id, public_props, private_props):
+    def add_user(self, user_id, passwd, public_props, private_props):
         raise NotImplementedError("Not implemented")
 
     def remove_user(self, user_id):
